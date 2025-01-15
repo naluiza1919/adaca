@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joguinho Da Estrela</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #59c5f0;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        #area-jogo {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .estrela {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: rgb(252, 218, 26);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            cursor: pointer;
+        }
+
+        #ponto {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            font-size: 24px;
+            background: rgb(255, 255, 255);
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
+
+        #mensagem {
+            font-size: 32px;
+            color: rgb(0, 124, 128);
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="ponto">Pontuação: 0</div>
+    <div id="mensagem">Meus parabéns, você ganhou!</div>
+    <div id="area-jogo"></div>
+
+    <script>
+        const gameArea = document.getElementById("area-jogo");
+        const scoreDisplay = document.getElementById("ponto");
+        const message = document.getElementById("mensagem");
+
+        let score = 0;
+        const totalStars = 10;
+
+        function createStar() {
+            const star = document.createElement("div");
+            star.classList.add("estrela");
+
+            const x = Math.random() * (window.innerWidth - 50);
+            const y = Math.random() * (window.innerHeight - 50);
+
+            star.style.left = `${x}px`;
+            star.style.top = `${y}px`;
+
+            star.addEventListener("click", () => {
+                score++;
+                scoreDisplay.textContent = `Pontuação: ${score}`;
+                star.remove();
+
+                if (score === totalStars) {
+                    message.style.display = "block";
+                }
+            });
+
+            gameArea.appendChild(star);
+        }
+
+        for (let i = 0; i < totalStars; i++) {
+            createStar();
+        }
+    </script>
+</body>
+</html>
